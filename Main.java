@@ -11,7 +11,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println(":: Capital Budgeting ::\n\nEnter the population size (Or Press Enter to retrieve default 10):");
+        System.out.println(":: Capital Budgeting ::\n\nEnter the population size (Or Press Enter to retrieve default 10) :");
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int populationSize;
         try {
