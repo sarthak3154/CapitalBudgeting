@@ -8,6 +8,7 @@ public class Population {
     private Chromosome[] chromosomes;
     private Chromosome[] parents;
     private int populationSum = 0;
+    private int chromosomeLength;
     private int size;
 
     private Population(int size) {
@@ -23,6 +24,7 @@ public class Population {
 
     void initPopulation(int chromosomeLength) {
         chromosomes = new Chromosome[size];
+        this.chromosomeLength = chromosomeLength;
         for (int i = 0; i < size; i++) {
             chromosomes[i] = new Chromosome(chromosomeLength);
             String randomFind = chromosomes[i].getValidChromosome();
@@ -39,13 +41,23 @@ public class Population {
         }
     }
 
-    void performSelection() {
-        parents = new Chromosome[2];
-        parents[0] = selectParent();
-        parents[1] = selectParent();
+    /**
+     * Generate the next generation population
+     * @return
+     */
+    Population generate() {
+        rouletteSelection();
+        crossover();
+        mutation();
+        return population;
     }
 
-    private Chromosome selectParent() {
+    /**
+     * Roulette Selection Mechanism
+     *
+     * @return
+     */
+    private Chromosome getFittestChromosome() {
         int partialSum = 0;
         int rand = new Random().nextInt(populationSum);
         for (int i = 0; i < size; i++) {
@@ -56,16 +68,30 @@ public class Population {
         return null;
     }
 
-    void performCrossover() {
-
+    /**
+     * Roulette Wheel Selection Algorithm
+     */
+    private void rouletteSelection() {
+        parents = new Chromosome[2];
+        parents[0] = getFittestChromosome();
+        parents[1] = getFittestChromosome();
     }
 
-    void performMutation() {
-
+    private void crossover() {
+        int crossOverPoint = new Random().nextInt(chromosomeLength);
+        for (int i = 0; i < crossOverPoint; i++) {
+            int temp = parents[0].getGenes()[i];
+            parents[0].getGenes()[i] = parents[1].getGenes()[i];
+            parents[1].getGenes()[i] = temp;
+        }
     }
 
-    public Chromosome[] getParents() {
-        return parents;
+    private void mutation() {
+        Random random = new Random();
+        int mutationPoint = random.nextInt(chromosomeLength);
+        parents[0].getGenes()[mutationPoint] = (parents[0].getGenes()[mutationPoint] == 0 ? 1 : 0);
+        int altMutationPoint = random.nextInt(chromosomeLength);
+        parents[1].getGenes()[altMutationPoint] = (parents[1].getGenes()[altMutationPoint] == 0 ? 1 : 0);
     }
 
     public int getSize() {

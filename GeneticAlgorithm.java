@@ -14,10 +14,15 @@ public class GeneticAlgorithm {
     void init() {
         population = Population.createInstance(populationSize);
         population.initPopulation(chromosomeLength);
-        population.calculateFitness();
-        population.performSelection();
-        Chromosome[] parents = population.getParents();
-        //TODO crossover and mutation
+        while (!isTerminationConditionMet()) {
+            population.calculateFitness();
+            population = population.generate();
+        }
+    }
+
+    private boolean isTerminationConditionMet() {
+        //TODO termination condition
+        return false;
     }
 
 }
