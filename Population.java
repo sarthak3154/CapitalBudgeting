@@ -15,7 +15,7 @@ public class Population {
         this.size = size;
     }
 
-    static Population createInstance(int populationSize) {
+    static Population getInstance(int populationSize) {
         if (population == null) {
             population = new Population(populationSize);
         }
@@ -43,13 +43,13 @@ public class Population {
 
     /**
      * Generate the next generation population
+     *
      * @return
      */
-    Population generate() {
+    void generate() {
         rouletteSelection();
         crossover();
         mutation();
-        return population;
     }
 
     /**

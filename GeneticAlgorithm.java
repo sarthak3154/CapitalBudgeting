@@ -12,11 +12,11 @@ public class GeneticAlgorithm {
     }
 
     void init() {
-        population = Population.createInstance(populationSize);
+        population = Population.getInstance(populationSize);
         population.initPopulation(chromosomeLength);
         while (!isTerminationConditionMet()) {
             population.calculateFitness();
-            population = population.generate();
+            population.generate();
         }
     }
 
