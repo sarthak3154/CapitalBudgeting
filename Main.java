@@ -1,25 +1,16 @@
 package geneticalgorithm;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Random;
 
 public class Main {
 
-    private static void initGeneticAlgorithm(int populationSize) {
-        new GeneticAlgorithm(populationSize, Constants.DEFAULT_CHROMOSOME_LENGTH).init();
+    private static void initGeneticAlgorithm() {
+        new GeneticAlgorithm(Constants.DEFAULT_POPULATION_SIZE, Constants.DEFAULT_CHROMOSOME_LENGTH,
+                Constants.MUTATION_PROBABILITY).init();
     }
 
     public static void main(String[] args) {
-        System.out.println(":: Capital Budgeting ::\n\nEnter the population size (Or Press Enter to retrieve default 10) :");
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int populationSize;
-        try {
-            populationSize = Integer.parseInt(reader.readLine());
-        } catch (IOException e) {
-            populationSize = Constants.DEFAULT_POPULATION_SIZE;
-            e.printStackTrace();
-        }
-        initGeneticAlgorithm(populationSize);
+        System.out.println(":: Capital Budgeting ::\n");
+        initGeneticAlgorithm();
     }
 }
