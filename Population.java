@@ -66,7 +66,7 @@ public class Population {
         return parentChromosomes[0].isValidChromosome() && parentChromosomes[1].isValidChromosome();
     }
 
-    private Chromosome getFittestOffspring() {
+    Chromosome getFittestOffspring() {
         if (parentChromosomes[0].getFitnessScore() > parentChromosomes[1].getFitnessScore()) {
             return parentChromosomes[0];
         }
@@ -74,10 +74,10 @@ public class Population {
     }
 
     private int getLeastFittestChromosomeIndex() {
-        int min = Integer.MAX_VALUE;
-        double minValue = 0.0;
+        int min = 0;
+        double minValue = Double.MAX_VALUE;
         for (int i = 0; i < size; i++) {
-            if (Double.compare(minValue, chromosomes[i].getFitnessScore()) < 0) {
+            if (Double.compare(minValue, chromosomes[i].getFitnessScore()) > 0) {
                 minValue = chromosomes[i].getFitnessScore();
                 min = i;
             }
@@ -102,7 +102,6 @@ public class Population {
         double partialSum = 0;
         Random random = new Random();
         double rand = (fitnessScore) * random.nextDouble();
-        System.out.println("Fitness Score: " + fitnessScore);
         for (int i = 0; i < size; i++) {
             partialSum += chromosomes[i].getFitnessScore();
             if (partialSum >= rand)
@@ -137,30 +136,36 @@ public class Population {
     }
 
     private void mutation() {
-        if (Math.random() > mutationProbability) {
-            Random random = new Random();
-            int mutationPoint = random.nextInt(chromosomeLength);
-            parentChromosomes[0].getGenes()[mutationPoint] = (parentChromosomes[0].getGenes()[mutationPoint] == 0
-                    ? 1 : 0);
-            int altMutationPoint = random.nextInt(chromosomeLength);
-            parentChromosomes[1].getGenes()[altMutationPoint] = (parentChromosomes[1].getGenes()[altMutationPoint] == 0
-                    ? 1 : 0);
+        if (Double.compare(Math.random(), mutationProbability) > 0) {
+            mutateWithBitFlip();
+            mutateWithBitFlip();
         }
     }
 
-    public void setMutationProbability(double mutationProbability) {
+    private void mutateWithBitFlip() {
+        Random random = new Random();
+        int mutationPoint = random.nextInt(chromosomeLength);
+        parentChromosomes[0].getGenes()[mutationPoint] = (parentChromosomes[0].getGenes()[mutationPoint] == 0
+                ? 1 : 0);
+        int altMutationPoint = random.nextInt(chromosomeLength);
+        parentChromosomes[1].getGenes()[altMutationPoint] = (parentChromosomes[1].getGenes()[altMutationPoint] == 0
+                ? 1 : 0);
+    }
+
+
+    void setMutationProbability(double mutationProbability) {
         this.mutationProbability = mutationProbability;
     }
 
-    public Chromosome[] getChromosomes() {
+    Chromosome[] getChromosomes() {
         return chromosomes;
     }
 
-    public int getSize() {
+    int getSize() {
         return size;
     }
 
-    public double getFitnessScore() {
+    double getFitnessScore() {
         return fitnessScore;
     }
 }

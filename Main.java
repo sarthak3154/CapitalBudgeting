@@ -1,7 +1,5 @@
 package geneticalgorithm;
 
-import java.util.Random;
-
 public class Main {
 
     private static void initGeneticAlgorithm() {
@@ -10,7 +8,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println(":: Capital Budgeting ::\n");
+        System.out.println("::: Capital Budgeting Genetic Algorithm :::\n");
         initGeneticAlgorithm();
     }
 }
